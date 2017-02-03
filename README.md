@@ -1,41 +1,27 @@
 
 # \<dropdown-plus\>
 
-
-
-## Install the Polymer-CLI
-
-First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your application locally.
-
-## Viewing Your Application
-
-```
-$ polymer serve
-```
-
-## Building Your Application
-
-```
-$ polymer build
-```
-
-This will create a `build/` folder with `bundled/` and `unbundled/` sub-folders
-containing a bundled (Vulcanized) and unbundled builds, both run through HTML,
-CSS, and JS optimizers.
-
-You can serve the built versions by giving `polymer serve` a folder to serve
-from:
-
-```
-$ polymer serve build/bundled
-```
-
-## Running Tests
-
-```
-$ polymer test
-```
-
-Your application is already set up to be tested via [web-component-tester](https://github.com/Polymer/web-component-tester). Run `polymer test` to run your application's test suite locally.
-# dropdown-plus
 A simple dropdown for polymer 1.0+
+
+##Install with bower
+
+```
+$ bower install paolobeltrame/dropdown-plus
+```
+
+##Usage
+
+```
+<dropdown-plus label="Selector" data="[[data]]"></dropdown-plus>
+```
+
+### Styling
+
+`<dropdown-plus>` provides the following custom properties and mixins for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+  `--dropdown-plus-focus-color` | Color of the underline and left border of selection |
+  `--dropdown-plus-font-size` | Global font size |
+  `--dropdown-plus-label-color` | Label color |
+
