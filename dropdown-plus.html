@@ -1,4 +1,7 @@
+
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
 
 <!--
 `dropdown-plus`
@@ -11,6 +14,9 @@
 <style>
 :host {
   --dropdown-plus-focus-color:red;
+  --dropdown-plus-font-size:12px;
+  --dropdown-plus-line-height:18px;
+  --dropdown-plus-label-color:green;
 }
 .dropdown {
     position: relative;
@@ -18,12 +24,13 @@
 }
 
 .dropdown-content {
+  margin-top:6px;
     border-radius:2px;
-    font-size:12px;
+    font-size:var(--dropdown-plus-font-size);
     display: none;
+    width:calc(100% - 76px);
     position: absolute;
     background-color: #f9f9f9;
-    min-width: 160px;
     box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.2);
     z-index: 1;
 }
@@ -34,9 +41,8 @@
 
 .dropdown-content > div {
   cursor:pointer;
-  padding:4px;
+  padding:8px 8px 8px 6px;
   border-left:2px solid transparent;
-  line-height:18px;
 }
 
 .dropdown-content[active] {
@@ -44,33 +50,65 @@
 }
 
 input {
-
-  font-size:12px;
-  margin-bottom:2px;
-  padding: 2px 0px;
+  font-size:var(--dropdown-plus-font-size);
   min-width: 160px;
   border:0px;
-  border-bottom: 2px solid #AAAAAA;
 }
 
 input:focus {
   outline: none;
   border:0px;
-  border-bottom:2px solid var(--dropdown-plus-focus-color);
 }
 
+.inputContainer {
+  @apply(--layout-horizontal);
+  align-items:center;
+}
+
+.inputContainer > .title {
+  padding: 0px 12px;
+  color:var(--dropdown-plus-label-color);
+  font-size:var(--dropdown-plus-font-size);
+  border-bottom: 2px solid transparent;
+  width:52px;
+
+}
+ 
+ iron-icon {
+   
+ }
+
+.iconHolder {
+    @apply(--layout-horizontal);
+    align-items:center;
+    border-bottom: 2px solid #AAAAAA;
+
+}
+ 
 </style>
 <div class="dropdown">
+  <div class="inputContainer">
+  <div class="title">[[label]]</div>
+  <div class="iconHolder">
+    <div>
   <input id="input" on-focus="_openDropdown" placeholder="Select" on-focusout="_closeDropdown">
-  <div class="dropdown-content" id="dropdown">
-  <template is="dom-repeat" items="[[items]]">
-    <div on-tap="_selectItem">[[item.label]]</div>
-  </template>
+    <div class="dropdown-content" id="dropdown">
+      <template is="dom-repeat" items="[[items]]">
+        <div on-tap="_selectItem">[[item.label]]</div>
+      </template>
+    </div>
+    </div>
+    <iron-icon icon="[[getIcon(opened)]]"></iron-icon>
+  </div>
+ 
   </div>
 </div>
 </template>
 <script>
     Polymer({
+      getIcon:function() {
+        return this.opened ?  "arrow-drop-up" :"arrow-drop-down" 
+      },
       _selectItem:function(e) {
         e.stopPropagation();
         this.set("selectedItem",e.model.item);
@@ -80,16 +118,27 @@ input:focus {
         this.fire("selected",e.model.item)
       },
       _openDropdown:function(e) {
-        this.toggleAttribute("active",true,this.$.dropdown)
+        this.toggleAttribute("active",true,this.$.dropdown);
+        this.set("opened",true)
       },
       _closeDropdown:function(e) {
         this.debounce("out",function() {
-          this.toggleAttribute("active",false,this.$.dropdown)
-        }.bind(this),150)
+          this._toggleDropdown();
+        }.bind(this),200)
     
       },
+      _toggleDropdown:function(){
+          this.toggleAttribute("active",false,this.$.dropdown);
+          this.set("opened",false)
+
+      },
       is: 'dropdown-plus',
+
       properties: {
+        opened:{value:false},
+        label:{
+          value:"Select"
+        },
         selectedIndex:{notify:true},
         selectedItem:{notify:true},
         attrForSelected:{value:"label",notify:true},
