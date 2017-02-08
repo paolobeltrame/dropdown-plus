@@ -15,7 +15,6 @@
 :host {
   --dropdown-plus-focus-color:red;
   --dropdown-plus-font-size:12px;
-  --dropdown-plus-line-height:18px;
   --dropdown-plus-label-color:green;
 }
 .dropdown {
@@ -74,10 +73,6 @@ input:focus {
 
 }
  
- iron-icon {
-   
- }
-
 .iconHolder {
     @apply(--layout-horizontal);
     align-items:center;
@@ -98,7 +93,7 @@ input:focus {
       </template>
     </div>
     </div>
-    <iron-icon icon="[[getIcon(opened)]]"></iron-icon>
+    <iron-icon icon="[[_getIcon(opened)]]"></iron-icon>
   </div>
  
   </div>
@@ -106,7 +101,7 @@ input:focus {
 </template>
 <script>
     Polymer({
-      getIcon:function() {
+      _getIcon:function() {
         return this.opened ?  "arrow-drop-up" :"arrow-drop-down" 
       },
       _selectItem:function(e) {
