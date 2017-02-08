@@ -24,7 +24,7 @@
 }
 
 .dropdown-content {
-  margin-top:6px;
+    margin-top:6px;
     border-radius:2px;
     font-size:var(--dropdown-plus-font-size);
     display: none;
@@ -73,7 +73,7 @@ input:focus {
   width:52px;
 
 }
- 
+
  iron-icon {
    
  }
@@ -91,10 +91,11 @@ input:focus {
   <div class="title">[[label]]</div>
   <div class="iconHolder">
     <div>
-  <input id="input" on-focus="_openDropdown" placeholder="Select" on-focusout="_closeDropdown">
+  <input id="input" on-focus="_openDropdown" value="[[labelValue]]" placeholder="Select" on-focusout="_closeDropdown">
     <div class="dropdown-content" id="dropdown">
       <template is="dom-repeat" items="[[items]]">
         <div on-tap="_selectItem">[[item.label]]</div>
+        <div style="height:24px">s</div>
       </template>
     </div>
     </div>
@@ -111,7 +112,9 @@ input:focus {
       },
       _selectItem:function(e) {
         e.stopPropagation();
+        console.log(e)
         this.set("selectedItem",e.model.item);
+        //this.set("labelValue",this.selectedItem.label);
         this.$.input.value=this.selectedItem.label;
         this.set("selected",e.model.item[this.attributeForSelected])
         this.set("selectedIndex",e.model.index)
@@ -130,11 +133,11 @@ input:focus {
       _toggleDropdown:function(){
           this.toggleAttribute("active",false,this.$.dropdown);
           this.set("opened",false)
-
       },
       is: 'dropdown-plus',
 
       properties: {
+        labelValue:{value:""},
         opened:{value:false},
         label:{
           value:"Select"
@@ -144,7 +147,10 @@ input:focus {
         attrForSelected:{value:"label",notify:true},
         items: {
           type: Array,
-          value: [{label:"Test1"}],
+          value: [
+            {label:"Test1gfjhfhgfghfj","giorno":3},
+            {"label":"Test2"},
+            {"label":"Test3"}],
         },
       }
     });
