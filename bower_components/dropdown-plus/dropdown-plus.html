@@ -1,0 +1,103 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+`dropdown-plus`
+
+
+@demo demo/index.html 
+-->
+<dom-module id="dropdown-plus">
+  <template>
+<style>
+:host {
+  --dropdown-plus-focus-color:red;
+}
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    border-radius:2px;
+    font-size:12px;
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content > div:hover {
+  border-left:2px solid var(--dropdown-plus-focus-color);
+} 
+
+.dropdown-content > div {
+  cursor:pointer;
+  padding:4px;
+  border-left:2px solid transparent;
+  line-height:18px;
+}
+
+.dropdown-content[active] {
+    display: block;
+}
+
+input {
+
+  font-size:12px;
+  margin-bottom:2px;
+  padding: 2px 0px;
+  min-width: 160px;
+  border:0px;
+  border-bottom: 2px solid #AAAAAA;
+}
+
+input:focus {
+  outline: none;
+  border:0px;
+  border-bottom:2px solid var(--dropdown-plus-focus-color);
+}
+
+</style>
+<div class="dropdown">
+  <input id="input" on-focus="_openDropdown" placeholder="Select" on-focusout="_closeDropdown">
+  <div class="dropdown-content" id="dropdown">
+  <template is="dom-repeat" items="[[items]]">
+    <div on-tap="_selectItem">[[item.label]]</div>
+  </template>
+  </div>
+</div>
+</template>
+<script>
+    Polymer({
+      _selectItem:function(e) {
+        e.stopPropagation();
+        this.set("selectedItem",e.model.item);
+        this.$.input.value=this.selectedItem.label;
+        this.set("selected",e.model.item[this.attributeForSelected])
+        this.set("selectedIndex",e.model.index)
+        this.fire("selected",e.model.item)
+      },
+      _openDropdown:function(e) {
+        this.toggleAttribute("active",true,this.$.dropdown)
+      },
+      _closeDropdown:function(e) {
+        this.debounce("out",function() {
+          this.toggleAttribute("active",false,this.$.dropdown)
+        }.bind(this),150)
+    
+      },
+      is: 'dropdown-plus',
+      properties: {
+        selectedIndex:{notify:true},
+        selectedItem:{notify:true},
+        attrForSelected:{value:"label",notify:true},
+        items: {
+          type: Array,
+          value: [{label:"Test1"}],
+        },
+      }
+    });
+  </script>
+</dom-module>
