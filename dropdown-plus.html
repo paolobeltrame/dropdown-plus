@@ -7,37 +7,49 @@
 `dropdown-plus`
 
 
-@demo demo/index.html 
+@demo demo/index.html
 -->
 <dom-module id="dropdown-plus">
   <template>
 <style>
 :host {
-  --dropdown-plus-focus-color:red;
-  --dropdown-plus-font-size:12px;
-  --dropdown-plus-line-height:18px;
-  --dropdown-plus-label-color:green;
-}
-.dropdown {
-    position: relative;
-    display: inline-block;
+
+  --dropdown-plus-focus-color:#0080FF;
+  --dropdown-plus-font-size:15px;
+  --dropdown-plus-content-font-size:13px;
+  --dropdown-plus-line-height:15px;
+  --dropdown-plus-label-color:#4a4a4a;
+  --dropdown-plus-label-font-size: 11px;
+
 }
 
+
+.dropdown {
+
+  /*background-color:red;*/
+    position: relative;
+    display: flex;
+    flex-grow: 1;
+}
+
+.inputField {
+  @apply(--layout-flex);
+}
 .dropdown-content {
     margin-top:6px;
     border-radius:2px;
-    font-size:var(--dropdown-plus-font-size);
+    font-size:var(--dropdown-plus-content-font-size);
     display: none;
-    width:calc(100% - 76px);
+    width:calc(100%);
     position: absolute;
-    background-color: #f9f9f9;
+    background-color: #f9f9f9; /* Dropdown background color */
     box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.2);
     z-index: 1;
 }
 
 .dropdown-content > div:hover {
   border-left:2px solid var(--dropdown-plus-focus-color);
-} 
+}
 
 .dropdown-content > div {
   cursor:pointer;
@@ -51,8 +63,11 @@
 
 input {
   font-size:var(--dropdown-plus-font-size);
-  min-width: 160px;
+  /*min-width: inherit;*/
   border:0px;
+  width: 100%;
+  color:var(--dropdown-plus-focus-color);
+  text-transform: lowercase;
 }
 
 input:focus {
@@ -61,54 +76,55 @@ input:focus {
 }
 
 .inputContainer {
-  @apply(--layout-horizontal);
-  align-items:center;
+  @apply(--layout-flex);
 }
 
 .inputContainer > .title {
-  padding: 0px 12px;
+  text-transform: lowercase;
+
   color:var(--dropdown-plus-label-color);
-  font-size:var(--dropdown-plus-font-size);
-  border-bottom: 2px solid transparent;
-  width:52px;
+  font-size:var(--dropdown-plus-label-font-size);
+  /*border-bottom: 2px solid transparent;*/
+  /*width:52px;*/
 
 }
 
  iron-icon {
-   
+
  }
 
 .iconHolder {
     @apply(--layout-horizontal);
+    @apply(--layout-flex);
     align-items:center;
-    border-bottom: 2px solid #AAAAAA;
+    /*border-bottom: 2px solid #AAAAAA;*/
 
 }
- 
+
 </style>
 <div class="dropdown">
   <div class="inputContainer">
   <div class="title">[[label]]</div>
   <div class="iconHolder">
-    <div>
-  <input id="input" on-focus="_openDropdown" value="[[labelValue]]" placeholder="Select" on-focusout="_closeDropdown">
+    <div class="inputField">
+  <input id="input" on-focus="_openDropdown" value="[[labelValue]]" placeholder="select" on-focusout="_closeDropdown">
     <div class="dropdown-content" id="dropdown">
       <template is="dom-repeat" items="[[items]]">
         <div on-tap="_selectItem">[[item.label]]</div>
-        <div style="height:24px">s</div>
+        <!-- <div style="height:24px">s</div> -->
       </template>
     </div>
     </div>
     <iron-icon icon="[[getIcon(opened)]]"></iron-icon>
   </div>
- 
+
   </div>
 </div>
 </template>
 <script>
     Polymer({
       getIcon:function() {
-        return this.opened ?  "arrow-drop-up" :"arrow-drop-down" 
+        return this.opened ?  "arrow-drop-up" :"arrow-drop-down"
       },
       _selectItem:function(e) {
         e.stopPropagation();
@@ -128,7 +144,7 @@ input:focus {
         this.debounce("out",function() {
           this._toggleDropdown();
         }.bind(this),200)
-    
+
       },
       _toggleDropdown:function(){
           this.toggleAttribute("active",false,this.$.dropdown);
@@ -140,7 +156,7 @@ input:focus {
         labelValue:{value:""},
         opened:{value:false},
         label:{
-          value:"Select"
+          value:"Data"
         },
         selectedIndex:{notify:true},
         selectedItem:{notify:true},
@@ -148,7 +164,7 @@ input:focus {
         items: {
           type: Array,
           value: [
-            {label:"Test1gfjhfhgfghfj","giorno":3},
+            {label:"data3plot","giorno":3},
             {"label":"Test2"},
             {"label":"Test3"}],
         },
