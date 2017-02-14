@@ -18,7 +18,7 @@
   --dropdown-plus-focus-color-alpha: rgba(0,128,255,0.1); /* Background color on Hover*/
   --dropdown-plus-font-size:15px;
   --dropdown-plus-content-font-size:13px;
-  --dropdown-plus-line-height:15px;
+  --dropdown-plus-line-height:24px;
   --dropdown-plus-label-color:#4a4a4a;
   --dropdown-plus-label-font-size: 13px;
 
@@ -66,9 +66,16 @@
 }
 
 input {
+  line-height: var(--dropdown-plus-line-height);
   font-size:var(--dropdown-plus-font-size);
   /*min-width: inherit;*/
-  border:0px;
+  border-bottom: 1px solid transparent;
+  border-top: 0px;
+  border-right: 0px;
+  border-left: 0px;
+
+
+
   width: 100%;
   color:var(--dropdown-plus-focus-color);
   text-transform: lowercase;
@@ -76,7 +83,11 @@ input {
 
 input:focus {
   outline: none;
-  border:0px;
+  border-bottom: 1px solid var(--dropdown-plus-focus-color);
+}
+
+input:hover {
+  border-bottom: 1px solid var(--dropdown-plus-focus-color);
 }
 
 .inputContainer {
