@@ -15,11 +15,12 @@
 :host {
 
   --dropdown-plus-focus-color:#0080FF;
+  --dropdown-plus-focus-color-alpha: rgba(0,128,255,0.1); /* Background color on Hover*/
   --dropdown-plus-font-size:15px;
   --dropdown-plus-content-font-size:13px;
   --dropdown-plus-line-height:15px;
   --dropdown-plus-label-color:#4a4a4a;
-  --dropdown-plus-label-font-size: 11px;
+  --dropdown-plus-label-font-size: 13px;
 
 }
 
@@ -49,12 +50,15 @@
 
 .dropdown-content > div:hover {
   border-left:2px solid var(--dropdown-plus-focus-color);
+    background-color: var(--dropdown-plus-focus-color-alpha);
+
 }
 
 .dropdown-content > div {
   cursor:pointer;
   padding:8px 8px 8px 6px;
   border-left:2px solid transparent;
+
 }
 
 .dropdown-content[active] {
